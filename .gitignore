@@ -1,0 +1,23 @@
+# Large dataset files (exceed GitHub's 100MB limit)
+data/*.csv
+data/*.zip
+data/*.parquet
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+venv/
+.venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints*/
+*/.ipynb_checkpoints/*
+
+# Operating System files
+Thumbs.db
+Desktop.ini
+.DS_Store

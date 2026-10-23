@@ -1,0 +1,132 @@
+// ============================================================================
+// CART ABANDONMENT PATTERN ANALYSIS - DAX MEASURES LIBRARY
+// Project: Cart Abandonment Pattern Analysis
+// Author: Senior Data Analyst
+// Table Home: _MeasuresTable
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// 1. VOLUME MEASURES
+// ----------------------------------------------------------------------------
+
+Total Orders = 
+DISTINCTCOUNT(Fact_CartEvents[order_id])
+
+Total Items = 
+COUNTROWS(Fact_CartEvents)
+
+Total Customers = 
+DISTINCTCOUNT(Fact_CartEvents[user_id])
+
+Abandoned Orders = 
+CALCULATE(
+    [Total Orders],
+    Fact_CartEvents[abandoned_flag] = 1
+)
+
+Completed Orders = 
+CALCULATE(
+    [Total Orders],
+    Fact_CartEvents[abandoned_flag] = 0
+)
+
+// ----------------------------------------------------------------------------
+// 2. CONVERSION & ATTRITION RATES
+// ----------------------------------------------------------------------------
+
+Abandonment Rate = 
+DIVIDE([Abandoned Orders], [Total Orders], 0)
+
+Checkout Completion Rate = 
+DIVIDE([Completed Orders], [Total Orders], 0)
+
+// ----------------------------------------------------------------------------
+// 3. FINANCIAL / REVENUE MEASURES
+// ----------------------------------------------------------------------------
+
+// Order-level cart value deduplicated across items
+Order Level Value = 
+SUMX(
+    VALUES(Fact_CartEvents[order_id]),
+    CALCULATE(MAX(Fact_CartEvents[cart_value]))
+)
+
+Realized Revenue = 
+CALCULATE(
+    [Order Level Value],
+    Fact_CartEvents[abandoned_flag] = 0
+)
+
+Lost Revenue = 
+CALCULATE(
+    [Order Level Value],
+    Fact_CartEvents[abandoned_flag] = 1
+)
+
+Total Potential Revenue = 
+[Realized Revenue] + [Lost Revenue]
+
+Revenue Leakage % = 
+DIVIDE([Lost Revenue], [Total Potential Revenue], 0)
+
+Average Cart Value (All) = 
+DIVIDE([Order Level Value], [Total Orders], 0)
+
+Average Cart Value (Abandoned) = 
+DIVIDE([Lost Revenue], [Abandoned Orders], 0)
+
+Average Cart Value (Completed) = 
+DIVIDE([Realized Revenue], [Completed Orders], 0)
+
+// ----------------------------------------------------------------------------
+// 4. FUNNEL STEP SPECIFIC MEASURES
+// ----------------------------------------------------------------------------
+
+Orders at Step Cart = 
+CALCULATE([Total Orders], Fact_CartEvents[checkout_step] = "Cart")
+
+Orders at Step Login = 
+CALCULATE([Total Orders], Fact_CartEvents[checkout_step] = "Login/Address")
+
+Orders at Step Shipping = 
+CALCULATE([Total Orders], Fact_CartEvents[checkout_step] = "Shipping")
+
+Orders at Step Payment = 
+CALCULATE([Total Orders], Fact_CartEvents[checkout_step] = "Payment")
+
+Orders at Step Confirmation = 
+CALCULATE([Total Orders], Fact_CartEvents[checkout_step] = "Order Confirmation")
+
+// Funnel Cumulative Conversion from Cart
+Funnel Conversion % = 
+VAR StepOrders = [Total Orders]
+VAR TopStepOrders = 
+    CALCULATE(
+        [Total Orders],
+        ALL(Fact_CartEvents[checkout_step]),
+        Fact_CartEvents[checkout_step] = "Cart"
+    )
+RETURN
+    DIVIDE(StepOrders, TopStepOrders, 0)
+
+// ----------------------------------------------------------------------------
+// 5. REVENUE RECOVERY TARGET SIMULATOR
+// ----------------------------------------------------------------------------
+
+// Simulated recovery of 5% of abandoned revenue
+Recoverable Revenue (5% Lift) = 
+[Lost Revenue] * 0.05
+
+// Simulated recovery of 10% of abandoned revenue
+Recoverable Revenue (10% Lift) = 
+[Lost Revenue] * 0.10
+
+// ----------------------------------------------------------------------------
+// 6. DYNAMIC FORMATTING STRINGS & KPI LABELS
+// ----------------------------------------------------------------------------
+
+KPI Abandonment Callout = 
+FORMAT([Abandonment Rate], "0.0%") & " (" & FORMAT([Abandoned Orders], "#,##0") & " orders lost)"
+
+KPI Lost Revenue Callout = 
+"$" & FORMAT([Lost Revenue] / 1000000, "#,##0.0") & "M Revenue Lost"
