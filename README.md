@@ -3,7 +3,7 @@
 
 **Author / Senior Data Analyst:** Analytics & Growth Engineering  
 **Tech Stack:** Python (pandas, matplotlib, seaborn), PostgreSQL, Excel (openpyxl), Power BI (DAX & Star Schema)  
-**Dataset:** `data/kz.csv` (2,633,521 raw interactions; 2,613,215 clean transactions across 1,426,253 unique orders)  
+**Dataset:** `data/kz.csv` (2,00,000 raw interactions; 2,00,000 clean transactions — stratified sample preserving 79.61% abandonment rate)  
 
 ---
 
@@ -36,8 +36,8 @@ This project addresses a multi-million-dollar e-commerce leakage problem: **Why 
 cart project/
 │
 ├── data/
-│   ├── kz.csv                           # Raw transactional dataset (~298 MB)
-│   └── kz_clean.csv                     # Cleaned & feature-engineered dataset (~486 MB)
+│   ├── kz.csv                           # Raw transactional dataset (~22 MB, 2,00,000 rows)
+│   └── kz_clean.csv                     # Cleaned & feature-engineered dataset (~35 MB, 18 cols)
 │
 ├── notebooks/                           # Jupyter Notebooks (End-to-End Pipeline)
 │   ├── 01_data_inspection.ipynb         # Raw data audit, nulls, duplicates & field mapping
@@ -55,10 +55,9 @@ cart project/
 ├── powerbi/                             # Business Intelligence Suite
 │   ├── Data_Model_Architecture.md       # Star Schema architecture & VertiPaq optimizations
 │   ├── DAX_Measures.dax                 # 20+ robust enterprise DAX formulas
-│   └── Dashboard_Design_Guide.md        # 4-Page dashboard visual layout blueprint
+│   └── Dashboard.pbix                   # Power BI dashboard file
 │
-├── reports/                             # Executive Strategy & Chart Assets
-│   ├── Cart_Abandonment_Executive_Report.md # Full senior analyst strategic report
+├── reports/                             # Chart Assets (auto-generated)
 │   ├── funnel_analysis.png              # Funnel drop-off and attrition by step
 │   ├── device_analysis.png              # Device-level abandonment & lost revenue
 │   ├── category_analysis.png            # Top 10 worst product categories
@@ -109,7 +108,7 @@ cart project/
 ### 4. Power BI (Dashboard Architecture & DAX)
 - **`powerbi/Data_Model_Architecture.md`**: Star Schema model with 1 Fact table (`Fact_CartEvents`) and 4 Dimensions (`Dim_Date`, `Dim_Device`, `Dim_Category`, `Dim_Customer`).
 - **`powerbi/DAX_Measures.dax`**: Complete library of DAX formulas: `[Abandonment Rate]`, `[Lost Revenue]`, `[Funnel Conversion %]`, `[Recoverable Revenue (5% Lift)]`, etc.
-- **`powerbi/Dashboard_Design_Guide.md`**: Wireframes and layouts for 4 interactive pages:
+- **`powerbi/Dashboard.pbix`**: Interactive Power BI dashboard with 4 pages:
   - Page 1: Executive KPI & Revenue Leak Overview
   - Page 2: Funnel Drop-off Deep-Dive
   - Page 3: Customer & Segment Diagnostics
@@ -149,4 +148,4 @@ python build_excel_summary.py
 #    - 03_eda_analysis.ipynb
 ```
 
-> **Note on Dataset Files:** Due to GitHub's 100 MB file upload limit, raw and processed CSV files (`data/kz.csv` and `data/kz_clean.csv`) are excluded via `.gitignore`. You can generate `data/kz_clean.csv` by placing your raw dataset into `data/` and running `python clean_data.py`.
+> **Note on Dataset Files:** Both `data/kz.csv` (~22 MB) and `data/kz_clean.csv` (~35 MB) are included in this repository. The dataset has been downsampled to **2,00,000 rows** using stratified sampling (preserving the 79.61% abandonment rate) so it fits within GitHub's 100 MB file limit.
