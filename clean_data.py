@@ -90,7 +90,29 @@ df['abandoned_flag'] = (df['checkout_step'] != 'Order Confirmation').astype(int)
 ab_rate = df['abandoned_flag'].mean() * 100
 print(f'  Abandonment rate: {ab_rate:.1f}%')
 
-print('Step 13: Saving clean CSV...')
+print('Step 13: Stratified sampling to 2,00,000 rows...')
+TARGET_ROWS = 200_000
+if len(df) > TARGET_ROWS:
+    # Split by abandoned_flag to maintain proportion (avoids pandas 2.x groupby key-drop bug)
+    df_aband   = df[df['abandoned_flag'] == 1]
+    df_complet = df[df['abandoned_flag'] == 0]
+
+    n_aband   = round(TARGET_ROWS * len(df_aband)   / len(df))
+    n_complet = TARGET_ROWS - n_aband
+
+    df = pd.concat([
+        df_aband.sample(n=n_aband,   random_state=42),
+        df_complet.sample(n=n_complet, random_state=42)
+    ]).sample(frac=1, random_state=42).reset_index(drop=True)
+
+    print(f'  Sampled down to  : {len(df):,} rows')
+    print(f'  Abandoned rows   : {n_aband:,}  ({n_aband/TARGET_ROWS*100:.2f}%)')
+    print(f'  Completed rows   : {n_complet:,}  ({n_complet/TARGET_ROWS*100:.2f}%)')
+    print(f'  Abandonment rate : {df["abandoned_flag"].mean()*100:.2f}%')
+else:
+    print(f'  Dataset already <= {TARGET_ROWS:,} rows — no sampling needed.')
+
+print('Step 14: Saving clean CSV...')
 out = r'c:\Users\anmol\OneDrive\Desktop\cart project\data\kz_clean.csv'
 df.to_csv(out, index=False)
 
