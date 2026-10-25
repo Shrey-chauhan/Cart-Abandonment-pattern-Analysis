@@ -14,19 +14,20 @@ This project addresses a multi-million-dollar e-commerce leakage problem: **Why 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────┐
 │                           CORE METRICS SCORECARD                             │
+│                     (2,00,000-row stratified sample)                         │
 ├──────────────────────────────────────┬───────────────────────────────────────┤
-│ Total Orders Initiated: 1,426,253    │ Realized Revenue:     $58,078,510     │
-│ Abandoned Orders:       1,345,988    │ Lost Revenue (GMV):   $293,195,075    │
-│ Overall Abandonment Rate: 94.37%     │ Total Potential GMV:  $351,273,585    │
-│ Average Abandoned Cart:   $217.83    │ Average Completed Cart: $723.58       │
+│ Total Rows in Dataset:  2,00,000     │ Dataset: Stratified Sample            │
+│ Abandoned Orders:       1,59,213     │ Abandonment Rate:     79.61%          │
+│ Completed Orders:        40,787      │ Sampling Seed:        42 (reproducible)│
+│ Avg Cart Value:         ~$370        │ Price Range:  $1.13 – $1,062.48       │
 └──────────────────────────────────────┴───────────────────────────────────────┘
 ```
 
 ### Top Findings:
-1. **The Cart-to-Address Chasm (80.8% of Drop-Off):** 60.8% of users (867,291 orders) abandon right at the cart, and another 20.0% (285,881 orders) abandon at the Login/Address stage. Forcing account registration and lack of guest checkout are the primary culprits.
-2. **Mobile Leakage ($161.2M Lost):** 55% of all checkout traffic is mobile, experiencing acute friction due to multi-step forms and lack of 1-tap digital wallets.
-3. **High-Ticket Category Resistance:** Smart-phones, TV/video, notebooks, and large kitchen appliances generate over **$200M+ in abandoned GMV** due to price sensitivity and surprise shipping costs.
-4. **$14.6M to $29.3M Annual Recovery Upside:** Recovering just 5% to 10% of abandoned carts through guest checkout, 1-tap Apple/Google Pay, and automated 45-minute email flows unlocks $14.65M - $29.32M in incremental revenue.
+1. **High Cart Abandonment (79.61%):** Nearly 4 in 5 orders are abandoned, with the majority dropping off at the Cart and Login/Address stages — pointing to friction from forced account creation.
+2. **Mobile Dominates Traffic (55%):** Mobile users account for the majority of checkout traffic and face acute friction due to multi-step forms and absence of 1-tap digital wallets.
+3. **High-Ticket Category Resistance:** Smart-phones, TV/video, notebooks, and large kitchen appliances show the highest abandonment rates due to price sensitivity and surprise shipping costs.
+4. **Significant Recovery Upside:** Recovering even 5–10% of abandoned carts through guest checkout, 1-tap Apple/Google Pay, and automated recovery email flows can drive meaningful incremental revenue.
 
 ---
 
