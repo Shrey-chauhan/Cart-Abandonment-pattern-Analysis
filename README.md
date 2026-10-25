@@ -119,14 +119,16 @@ cart project/
 
 ## 🚀 Prioritized Product Roadmap (What to Fix First)
 
-| Priority | Initiative | Funnel Stage | Expected Lift | Annual Revenue Upside |
+| Priority | Initiative | Funnel Stage | Expected Lift | Revenue Upside (Sampled Dataset) |
 |:---:|:---|:---:|:---:|:---:|
-| **P1** | **Mandatory Guest Checkout** (Remove forced account creation) | Login/Address | +3.2% Conversion | **+$9.4M** |
-| **P1** | **1-Tap Mobile Wallets** (Apple Pay / Google Pay on Cart) | Cart & Payment | +2.5% Conversion | **+$7.3M** |
-| **P1** | **Automated 45-Min Recovery Emails** (Personalized cart link) | Post-Cart | +1.8% Recovery | **+$5.2M** |
-| **P2** | **Upfront Shipping Fee Estimator** (Eliminate sticker shock) | Shipping | -20% Drop-off | **+$4.8M** |
-| **P2** | **Buy Now Pay Later (BNPL)** (Klarna/Affirm on orders >$200) | Payment | +12% Conversion | **+$3.6M** |
-| **P3** | **1-Page Accordion Checkout** (Google Places address autofill) | Full Funnel | +1.5% Conversion | **+$4.4M** |
+| **P1** | **Mandatory Guest Checkout** (Remove forced account creation) | Login/Address | +3.2% Conversion | **+$720K** |
+| **P1** | **1-Tap Mobile Wallets** (Apple Pay / Google Pay on Cart) | Cart & Payment | +2.5% Conversion | **+$560K** |
+| **P1** | **Automated 45-Min Recovery Emails** (Personalized cart link) | Post-Cart | +1.8% Recovery | **+$400K** |
+| **P2** | **Upfront Shipping Fee Estimator** (Eliminate sticker shock) | Shipping | -20% Drop-off | **+$370K** |
+| **P2** | **Buy Now Pay Later (BNPL)** (Klarna/Affirm on orders >$200) | Payment | +12% Conversion | **+$280K** |
+| **P3** | **1-Page Accordion Checkout** (Google Places address autofill) | Full Funnel | +1.5% Conversion | **+$340K** |
+
+> 💡 *Revenue upside figures are based on the 2,00,000-row stratified sample (7.65% of original 2.6M dataset). Full-scale projections would be approximately 13× higher.*
 
 ---
 
