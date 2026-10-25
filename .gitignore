@@ -1,5 +1,4 @@
-# Large dataset files (exceed GitHub's 100MB limit)
-data/*.csv
+# Data files (zip/parquet excluded; CSVs are tracked since they are under 100MB)
 data/*.zip
 data/*.parquet
 
